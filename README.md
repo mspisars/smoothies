@@ -1,1 +1,1 @@
-Simple React App with Node.js/Postres backend!
+Simple React App with Node.js/Postgres backend!
