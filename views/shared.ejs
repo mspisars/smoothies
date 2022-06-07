@@ -16,16 +16,20 @@
         <div class="row">
           <div class="col">
             <h5>Ingredients</h5>
-            <div><span> 1 ct - Orange</span><br>
-              <p>Blood orange works well</p>
+            <% ingredients.forEach(function(item) { %>
+            <div><span> <%- item.quantity %> <%- item.uom %> - <%- item.name %></span><br>
+              <span><%- item.description %></span>
             </div>
-            <div><span> 2 tsp - honey</span><br>
-              <p>raw</p>
-            </div>
+            <% }); %>
           </div>
           <div class="col">
             <h5>Instructions</h5>
-            <div><span> [1] - Combine, blend, drink!</span><br></div>
+              <% instructions.forEach(function(item) { %>
+                <div><span>
+                    <%- item.sequence %> - <%- item.description %>
+                  </span><br>
+                </div>
+              <% }); %>
           </div>
         </div>
       </div>
