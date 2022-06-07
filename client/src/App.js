@@ -37,7 +37,6 @@ class App extends Component {
       opts.method = 'post';
     }
     const { data } = await axiosHelper(opts);
-      console.log("result data", data)
     this.setState({
       recipes: data
     });

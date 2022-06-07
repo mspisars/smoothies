@@ -33,7 +33,6 @@ export default function LoginForm() {
       method: 'post',
       data: form
     })
-    console.log(data, form);
     if (data.auth) {
       localStorage.setItem("user", JSON.stringify(data));
       navigate("/smoothies", { replace: true });

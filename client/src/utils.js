@@ -20,7 +20,6 @@ export const axiosHelper = async (options) => {
       ...options, 
       headers: apiHeaders()
     });
-    console.log(res);
 
     if (res.status === 401) {
       console.log(res);

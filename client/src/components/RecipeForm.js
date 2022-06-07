@@ -21,7 +21,6 @@ const RecipeForm = props => {
 
   const { activeRecipe } = location.state || {};
   if (activeRecipe) initialValues = activeRecipe;
-  console.log("recipeForm props", props, location, recipeId, initialValues);
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -62,7 +61,6 @@ const RecipeForm = props => {
         url: `/api/${prop}/${item.id}`,
         method: 'delete',
       });
-      console.log("DELETE", data);
       allow = !!data;
     }
     // if we added the item client side (and not saved)
@@ -74,7 +72,6 @@ const RecipeForm = props => {
 
   const onSubmit = async (fields) => {
     // display form field values on success
-    console.log('SUCCESS!! passed yup tests', fields);
     const options = {
         method: 'post', 
         data: fields
@@ -89,7 +86,6 @@ const RecipeForm = props => {
 
     }
     const res = await axiosHelper(options);
-    console.log("RESULT", res)
     navigate(`/smoothie/${recipeId || res.data.recipe_id}`, { replace: true });
   }
   let button;

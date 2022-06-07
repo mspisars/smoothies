@@ -26,7 +26,6 @@ const Recipe = props => {
       url: `/api/Recipe/${id}`,
       method: 'delete',
     });
-    console.log("DELETE", data);
 
     if (data) navigate('/smoothies', { replace: true });
   };
@@ -44,7 +43,6 @@ const Recipe = props => {
     if (data) {
       setActiveRecipe({ ...activeRecipe, published: data });
     }
-    console.log("PUBLISH", data, activeRecipe);
   };
 
   return (
