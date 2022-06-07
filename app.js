@@ -67,7 +67,7 @@ passport.deserializeUser(function (id, done) {
     done(err, user);
   });
 });
-app.use(session({ secret: jwtConfig.secret, resave: false, saveUninitialized: false}));
+app.use(session({ secret: jwtConfig.secret, resave: true, saveUninitialized: false}));
 app.use(passport.initialize());
 
 // error message handling...

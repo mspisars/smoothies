@@ -79,7 +79,7 @@ router.post('/publishRecipe', passport.authenticate('jwt', { session: false }), 
   // fill in username...
   const { id, url } = req.body;
   const payload = { RecipeId: id, publishedId: id, url };
-  const check = await db.Published.findAll(payload);
+  const check = await db.Published.findAll({ where:payload });
   if (check.length) res.json();
   else {
     try {
