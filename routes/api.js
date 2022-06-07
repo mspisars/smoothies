@@ -78,15 +78,18 @@ router.post('/publishRecipe', passport.authenticate('jwt', { session: false }), 
   console.log("/api/publishRecipe", req.user, req.body);
   // fill in username...
   const { id, url } = req.body;
-
-  const payload = { RecipeId: id , url };
-  try {
-    const result = await db.Published.create(payload);
-    res.json(result);
-  }
-  catch (e) {
-    console.log(e);
-    res.json();
+  const payload = { RecipeId: id, publishedId: id, url };
+  const check = await db.Published.findAll(payload);
+  if (check.length) res.json();
+  else {
+    try {
+      const result = await db.Published.create(payload);
+      res.json(result);
+    }
+    catch (e) {
+      console.log(e);
+      res.json();
+    }
   }
 });
 
