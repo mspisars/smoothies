@@ -1,0 +1,36 @@
+<%- include('head', { title: 'Smoothie Man!' }) -%>
+
+<div class="App">
+  <header class="App-header"><span class="App-title col-11 pr-10">Smoothie Recipe App</span></header>
+  <div class="container">
+    <div class="active-recipe">
+      <h3 class="active-recipe__title"><%- name %></h3>
+      <h4 class="active-recipe__publisher">By: <span><%- username %></span> Serving: <span><%- serving %></span></h4>
+      <p class="active-recipe__website">
+        <span>
+          <%- description %>
+        </span>
+      </p>
+
+      <div class="container p-0 active-recipe__publisher">
+        <div class="row">
+          <div class="col">
+            <h5>Ingredients</h5>
+            <div><span> 1 ct - Orange</span><br>
+              <p>Blood orange works well</p>
+            </div>
+            <div><span> 2 tsp - honey</span><br>
+              <p>raw</p>
+            </div>
+          </div>
+          <div class="col">
+            <h5>Instructions</h5>
+            <div><span> [1] - Combine, blend, drink!</span><br></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('foot') -%>
