@@ -38,7 +38,7 @@ passport.use('login', new LocalStrategy(
     if (!username || !password) return done(null, false, { message: 'User not found.' });
     db.User.findOne({ where: { username: username } }).then((user) => {
       console.log('auth-login', user, username, password);
-      if (!user) { return done(null, false, { message: 'User not found.' }); }
+      if (!user) { return done(null, false, { message: 'User not found.', clear: true }); }
       if (!user.verifyPassword(password)) { return done(null, false, { message: 'Invalid password.' }); }
       return done(null, user);
     }).catch((err) => done(err));

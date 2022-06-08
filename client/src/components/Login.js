@@ -1,5 +1,5 @@
 
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
@@ -9,9 +9,13 @@ import Header from './Header';
 
 export default function LoginForm() {
   const navigate = useNavigate();
+
   let initialValues = {
     username: '',
     password: '',
+    confirmPassword: '',
+    email: '',
+    isRegister: false
   };
 
   const validationSchema = Yup.object().shape({
@@ -19,11 +23,21 @@ export default function LoginForm() {
       .required('username is required'),
     password: Yup.string()
       .required('password is required'),
+    confirmPassword: Yup.string().when("isRegister", {
+      is: (isRegister) => isRegister === true,
+      then: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
+    }),
+    email: Yup.string().when("isRegister", {
+      is: (isRegister) => isRegister === true,
+      then: Yup.string().email('email is required to register.')
+    }),
   });
 
   useEffect(() => {
     let user = localStorage.getItem("user");
-    if (user) navigate("/smoothies", { replace: true });
+    if (user) {
+      navigate("/smoothies", { replace: true });
+    }
   }, [navigate]);
 
 
@@ -44,7 +58,7 @@ export default function LoginForm() {
       <Header />
       <div className="Login container col-5">
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-          {({ errors, touched, setValues }) => (
+          {({ values, errors, touched, setFieldValue }) => (
             <Form>
               <div className="row text-center">
                 <div className="form-group col col-centered">
@@ -60,13 +74,38 @@ export default function LoginForm() {
                   <ErrorMessage name="password" component="div" className="invalid-feedback" />
                 </div>
               </div>
+              {values.isRegister && (
+                <>
+                  <div className="row">
+                    <div className="form-group col col-centered">
+                      <label>Confirm Password</label>
+                      <Field name="confirmPassword" type="text" className={'form-control' + (errors.confirmPassword && touched.confirmPassword ? ' is-invalid' : '')} />
+                      <ErrorMessage name="confirmPassword" component="div" className="invalid-feedback" />
+                    </div>
+                  </div>
+                  <div className="row text-center">
+                    <div className="form-group col col-centered">
+                      <label>Email</label>
+                      <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
+                      <ErrorMessage name="email" component="div" className="invalid-feedback" />
+                    </div>
+                  </div>
+                </>
+              )}
               <button block="true" size="lg" type="submit">
-                Login
+                {values.isRegister ? 'Register' : 'Login'}
               </button>
-            </Form> 
+              <div className="custom-control custom-checkbox">
+                <label className="custom-control-label">
+                  <Field name="isRegister" type="checkbox" checked={values.isRegister} className="custom-control-input" />
+                  Register?
+                </label>
+                <ErrorMessage name="isRegister" component="div" className="invalid-feedback" />
+              </div>
+            </Form>
           )}
-          </Formik>
-        </div>
+        </Formik>
       </div>
+    </div>
   );
 }

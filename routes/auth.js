@@ -6,15 +6,28 @@ const jwt = require('jsonwebtoken');
 const jwtConfig = require('../config/jwtConfig');
 
 router.post('/', (req, res, next) => {
-  passport.authenticate('login', { session: false }, (err, user, info) => {
+  passport.authenticate('login', { session: false }, async (err, user, info) => {
     console.log('login', err, user, info);
     if (err) {
       console.log(err);
+      next(err);
     }
-    if (info != undefined) {
-      console.log(info);
-      res.send(info);
-    } else {
+    if (!user) {
+      const form = { ...req.body };
+      console.log(info, form);
+      if (info.clear && form.isRegister) {
+        user = await db.User.create({
+          username: form.username,
+          password: form.password,
+          email: form.email
+        });
+        console.log(user);
+      }
+      else {
+        res.send(info);
+      }
+    }
+    if (user) {
       console.log('login -USER *********', req.user);
 
       req.logIn(user, err => {

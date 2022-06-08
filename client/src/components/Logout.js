@@ -20,7 +20,7 @@ class LogoutButton extends React.Component {
   
   handleClick(e) {
     e.preventDefault();
-    localStorage.removeItem("user");
+    localStorage.clear();
     this.props.navigation('/', {replace: true});
   }
 
